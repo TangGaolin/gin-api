@@ -1,8 +1,10 @@
 package http
 
 import (
+	"fmt"
 	"gin-api/app/service"
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/viper"
 	"log"
 	"net/http"
 )
@@ -12,10 +14,13 @@ var (
 )
 
 func New(s *service.Service) (httpSrv *http.Server){
+
+	gin.SetMode(viper.GetString("mode"))
 	router := gin.Default()
 	initRouter(router)
+	fmt.Println("new http:", viper.GetString("port"))
 	httpSrv = &http.Server{
-		Addr:    ":8080",
+		Addr:    ":"+viper.GetString("port"),
 		Handler: router,
 	}
 	svc = s

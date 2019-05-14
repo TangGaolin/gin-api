@@ -12,7 +12,6 @@ import (
 )
 
 func main() {
-	//参数处理
 	svc := service.New()
 	httpSrv := http.New(svc)
 	c := make(chan os.Signal, 1)
@@ -25,6 +24,7 @@ func main() {
 				log.Fatalf("httpSrv.Shutdown error(%v)", err)
 			}
 			log.Println("Shutdown Server ...")
+			svc.Close()
 			cancel()
 			time.Sleep(time.Second)
 			return

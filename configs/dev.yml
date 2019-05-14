@@ -1,0 +1,19 @@
+appname: gin-api
+
+env: dev
+mode: debug
+port: 8088
+
+log_file: /data/logs/gin-api/gin-api.log
+
+msyql:
+  user: root
+  password: xxxx
+  host: 127.0.0.1
+  port: 3306
+  db: demos
+
+redis:
+  host: 127.0.0.1
+  password:
+  port: 6379
