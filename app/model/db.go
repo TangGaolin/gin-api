@@ -16,13 +16,7 @@ const MAX_IDLE_SIZE = 3
 
 func Init() {
 	var err error
-	db, err = gorm.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local",
-		viper.GetString("mysql.user"),
-		viper.GetString("mysql.password"),
-		viper.GetString("mysql.host"),
-		viper.GetString("mysql.port"),
-		viper.GetString("mysql.db"),
-		))
+	db, err = GetConnect()
 	if err != nil {
 		logs.Logger.Error("gorm.Open err:" + err.Error())
 		panic(err)
@@ -32,4 +26,22 @@ func Init() {
 	//设置连接池配置
 	db.DB().SetMaxOpenConns(MAX_OPEN_POOL_SIZE)
 	db.DB().SetMaxIdleConns(MAX_IDLE_SIZE)
+
+}
+
+func GetConnect() (*gorm.DB, error) {
+	return gorm.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local",
+		viper.GetString("mysql.user"),
+		viper.GetString("mysql.password"),
+		viper.GetString("mysql.host"),
+		viper.GetInt("mysql.port"),
+		viper.GetString("mysql.db"),
+	))
+}
+
+func Close() {
+	err := db.Close()
+	if err != nil {
+		logs.Logger.Error("gorm.Open close:" + err.Error())
+	}
 }

@@ -5,7 +5,6 @@ import (
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
-	"time"
 )
 
 var (
@@ -31,21 +30,7 @@ func Init() {
 	Logger = zap.New(core)
 }
 
-
-func LogErr(action string,  msg string) {
-	Logger.Error(msg,
-		zap.String("trace_id", traceId),
-		zap.String("log_time", time.Now().Format("2006-01-02 15:04:05")))
-}
-
-func LogInfo(action string, traceId string, msg string) {
-	Logger.Info(msg,
-		zap.String("trace_id", traceId),
-		zap.String("log_time", time.Now().Format("2006-01-02 15:04:05")))
-}
-
-func LogWarn(action string, traceId string, msg string) {
-	Logger.Warn(msg,
-		zap.String("trace_id", traceId),
-		zap.String("log_time", time.Now().Format("2006-01-02 15:04:05")))
+func logErrorF(msg string) string {
+	Logger.Error(msg)
+	return msg
 }

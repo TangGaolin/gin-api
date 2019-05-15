@@ -21,9 +21,9 @@ func main() {
 		case syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT:
 			ctx, cancel := context.WithTimeout(context.Background(), 35*time.Second)
 			if err := httpSrv.Shutdown(ctx); err != nil {
-				log.Fatalf("httpSrv.Shutdown error(%v)", err)
+				log.Fatalf("http server Shutdown error(%v)", err)
 			}
-			log.Println("Shutdown Server ...")
+			log.Print("Shutdown Server ...")
 			svc.Close()
 			cancel()
 			time.Sleep(time.Second)
