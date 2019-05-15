@@ -1,19 +1,18 @@
 appname: gin-api
 
-env: dev
-mode: debug
+env: release
 port: 8088
 
 log_file: /data/logs/gin-api/gin-api.log
 
 mysql:
-  user: xxx
-  password: xxxxx
+  user: root
+  password: root
   host: 127.0.0.1
   port: 3306
-  db: xxx
+  db: test
 
 redis:
   host: 127.0.0.1
-  password: xxxxx
+  password:
   port: 6379

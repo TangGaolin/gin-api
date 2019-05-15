@@ -12,8 +12,7 @@ type Service struct {
 }
 
 func New() (s *Service) {
-	//配置管理
-	viper.SetConfigName("dev")
+	viper.SetConfigName(getEnv())
 	viper.AddConfigPath("../configs/")
 	err := viper.ReadInConfig()
 	if err != nil {
@@ -25,6 +24,17 @@ func New() (s *Service) {
 	redis.Init()
 	s = &Service{}
 	return s
+}
+
+const ENV = "GIN_API"
+
+func getEnv() string {
+	_ = viper.BindEnv(ENV)
+	env := viper.Get(ENV)
+	if nil == env {
+		return "local"
+	}
+	return env.(string)
 }
 
 // Close close the resource.

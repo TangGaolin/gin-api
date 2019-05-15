@@ -23,7 +23,7 @@ func main() {
 			if err := httpSrv.Shutdown(ctx); err != nil {
 				log.Fatalf("http server Shutdown error(%v)", err)
 			}
-			log.Print("Shutdown Server ...")
+			log.Print("Shutdown Server...")
 			svc.Close()
 			cancel()
 			time.Sleep(time.Second)

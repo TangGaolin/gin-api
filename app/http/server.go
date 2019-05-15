@@ -53,7 +53,7 @@ func (c *Context) error(code int, msg string) {
 //----------------------------------------------------
 
 func New(s *service.Service) (httpSrv *http.Server) {
-	gin.SetMode(viper.GetString("mode"))
+	gin.SetMode(viper.GetString("env"))
 	router := gin.New()
 	initRouter(router)
 	httpSrv = &http.Server{
