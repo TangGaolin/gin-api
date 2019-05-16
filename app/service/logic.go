@@ -2,14 +2,18 @@ package service
 
 import (
 	"errors"
+	"fmt"
 	models "gin-api/app/model"
+	"gin-api/pkg/logs"
 	"github.com/google/uuid"
 )
 
 // Ping ping the resource.
 func (s *Service) Ping() error {
 	db, err := models.GetConnect()
-	defer db.Close()
+	defer func() {
+		_ = db.Close()
+	}()
 	if err != nil {
 		return err
 	}
@@ -24,6 +28,13 @@ var userData = map[string]string{
 
 func (s *Service) Login(userName string, password string) (map[string]interface{}, error) {
 
+	user, err := models.NewUser().GetUserByMobile(userName)
+	if err != nil {
+		logs.Logger.Error(fmt.Sprintf("user GetUserByMobile err: %s", err.Error()))
+	}
+	if user != nil {
+
+	}
 	if _, ok := userData[userName]; ok {
 		//存在
 		if userData[userName] == password {
@@ -34,6 +45,7 @@ func (s *Service) Login(userName string, password string) (map[string]interface{
 		}
 	}
 	return nil, errors.New("用户名密码不正确！")
+
 }
 
 func (s *Service) AuthInfo(userName string) (map[string]interface{}, error) {
@@ -46,4 +58,5 @@ func (s *Service) AuthInfo(userName string) (map[string]interface{}, error) {
 		}, nil
 	}
 	return nil, errors.New("暂无用户信息！")
+
 }
