@@ -8,7 +8,6 @@ func ping(c *Context) {
 }
 
 func login(c *Context) {
-
 	userName := c.Query("user_name")
 	password := c.Query("password")
 	result, err := svc.Login(userName, password)
