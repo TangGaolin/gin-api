@@ -1,16 +1,24 @@
 package utils
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"fmt"
-	"github.com/google/uuid"
+	"github.com/rs/xid"
 	"time"
 	"unsafe"
 )
 
 func GenRid() string {
-	return fmt.Sprintf("%d_%s", time.Now().Unix(), uuid.New().String())
+	return fmt.Sprintf("%s_%d", xid.New().String(), time.Now().Unix())
 }
 
-func ByteSlice2String(bs []byte) string {
+func Md5(text string) string {
+	ctx := md5.New()
+	ctx.Write([]byte(text))
+	return hex.EncodeToString(ctx.Sum(nil))
+}
+
+func Bytes2string(bs []byte) string {
 	return *(*string)(unsafe.Pointer(&bs))
 }
