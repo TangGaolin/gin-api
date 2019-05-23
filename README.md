@@ -48,3 +48,16 @@
         └── func.go
 ```
 
+### 启动
+通过环境变量来选择对应的配置, 默认配置为
+
+``` bash
+cp configs/qa.yml configs/dev.yml 
+cd cmd && go build && ./cmd
+
+//或者
+
+cd cmd && go build
+export GIN_API=local && ./cmd
+```
+
